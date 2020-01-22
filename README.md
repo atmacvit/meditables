@@ -1,2 +1,3 @@
-# meditables
-Dataset, code and pre-trained models for table localization in document images from healthcare/medical domain 
+# MediTables-IIIT
+
+The Dataset, Code and Pre-trained Models for table localization in document images from the healthcare/medical domain 
