@@ -1,0 +1,24 @@
+We have used the pix2pixHD implementation by Nvidia (https://github.com/NVIDIA/pix2pixHD) as a semantic segmentation model with the input images being documents and the label images being table mask. 
+
+The arguments used are the following:
+fineSize: 512
+loadSize: 512
+input_nc: 3
+output_nc: 3
+instance_feat: False
+label_nc: 0
+lr: 0.0002
+n_blocks_global: 9
+n_blocks_local: 3
+n_layers_D: 3
+n_local_enhancers: 1
+ndf: 64
+nef: 16
+netG: global
+ngf: 64
+no_instance: True
+no_lsgan: False
+no_vgg_loss: False
+num_D: 2
+resize_or_crop: resize
+use_dropout: False
