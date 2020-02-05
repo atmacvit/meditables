@@ -1,0 +1,3 @@
+One of the object detection models used for comparison in our paper is TableBank (https://github.com/doc-analysis/TableBank)
+
+We initialized a ResNeXt152 model using a pre-trained model (Without Copyright Data X152) provided in the Model Zoo section of TableBank (https://github.com/doc-analysis/TableBank/blob/master/MODEL_ZOO.md#table-detection) and followed the exact procedure provided in the repo.
