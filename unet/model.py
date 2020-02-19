@@ -66,7 +66,3 @@ class UNet(nn.Module):
         # out_triple = self.conv_last_triple(x)
 #        print("Out", out.shape)
         return out_single
-
-
-m = UNet(1)
-print(summary(m,(1,512,512)))

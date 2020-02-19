@@ -1,6 +1,5 @@
 import cv2
 from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, utils
 import numpy as np
 import os
 import PIL
@@ -16,9 +15,10 @@ class UnetDataset(Dataset):
         super(UnetDataset,self).__init__()
         self.images_dir = image_dir
         self.labels_dir = labels_dir
-        self.images = [x for x in os.listdir(image_dir) if os.splitext(x)[1] in ['jpeg','png','jpg']].sort()
-        self.labels = [x for x in os.listdir(labels_dir) if os.splitext(x)[1] in ['jpeg','png','jpg']].sort()
-        # self.images.sort()
+        self.images = [os.path.join(image_dir,x) for x in os.listdir(image_dir) ]
+        self.labels = [os.path.join(labels_dir,x) for x in os.listdir(labels_dir) ]
+        self.images.sort()
+        self.labels.sort()
         self.transform = transform
         self.imageloader = imageloader
 
@@ -41,7 +41,7 @@ class InferDataset(Dataset):
     def __init__(self,image_dir,transform,imageloader=cv2.imread):
         super(TestDataset,self).__init__()
         self.image_dir = image_dir
-        self.images = [x for x in os.listdir(image_dir) if os.splitext(x)[1] in ['jpeg','png','jpg']].sort()
+        self.images = [x for x in os.listdir(image_dir) if os.path.splitext(x)[1] in ['jpeg','png','jpg']].sort()
         self.transform = transform
         self.imageloader = imageloader
 
@@ -75,7 +75,7 @@ class JsonDataset(Dataset):
         super(JsonDataset,self).__init__()
         self.images_dir = image_dir
         self.labels_dir = labels_dir
-        self.images = [x for x in os.listdir(image_dir) if os.splitext(x)[1] in ['jpeg','png','jpg']].sort()
+        self.images = [x for x in os.listdir(image_dir) if os.path.splitext(x)[1] in ['jpeg','png','jpg']].sort()
         self.labels = [x for x in os.listdir(labels_dir) if x.endswith("json")].sort()
 
     def __len__(self):
@@ -132,84 +132,3 @@ class JsonDataset(Dataset):
              img = self.transform(img)
              labelimg = self.transform(labelimg)
         return (img,labelimg)
-
-
-#         plt.figure(figsize=(8,8))
-#         plt.imshow(img)
-#         plt.show()
-#         cv2.rectangle(img, (0,0), (img.shape[1], img.shape[0]), (0,0,0), -1)
-#         with open(i) as json_file:
-#             data = json.load(json_file)
-#             for each in data["shapes"]:
-#                 print("ep", each["points"])
-#                 a = np.array(each["points"])
-#                 a = np.append(a, [a[0]], axis=0)
-# #                 print("a", a)
-# #                 a[:,0] = a[:,0]*512/img1.shape[0]
-# #                 a[:,1] = a[:,0]*512/img1.shape[1]
-# #                 print("a1", a)
-#                 if each['label']=='Table':
-#                     rr, cc = polygon(a[:,0], a[:,1], img.shape)
-#                     try:
-#                         img[cc,rr] = 1
-#                     except:
-#                         pass
-#                     print("Table Fig below")
-# #                     plt.figure(figsize=(8,8))
-# #                     plt.imshow(img)
-# #                     plt.show()
-#                 if each['label']=='T1':
-#                     rr, cc = polygon(a[:,0], a[:,1], img.shape)
-#                     img[cc,rr] = 1
-#                     print("T1 Fig below")
-# #                     plt.figure(figsize=(8,8))
-# #                     plt.imshow(img)
-# #                     plt.show()
-# #                     cv2.fillPoly(img, [np.array(a, np.int64)], (0,1,0))
-#                 if each['label']=='T2':
-#                     rr, cc = polygon(a[:,0], a[:,1], img.shape)
-#                     img[cc,rr] = 2
-#                     print("T2 Fig below")
-# #                     plt.figure(figsize=(8,8))
-# #                     plt.imshow(img)
-# #                     plt.show()
-# #                     cv2.fillPoly(img, [np.array(a, np.int64)], (0,0,1))
-# #                 rows = img.shape[0]
-# #                 cols = img.shape[1]
-# #                 for x in range(0, rows):
-# #                     for y in range(0, cols):
-# #                         if img[x,y] != 1 or img[x,y] != 2:
-# # #                             print(img[x,y])
-# #                             img[x,y] = 0
-#         u1, c1 = np.unique(img, return_counts=True)
-#         print("u1c1", u1, c1)
-#         try:
-#             zeros.append(c1[0])
-#         except:
-#             zeros.append(0)
-#         try:
-#             ones.append(c1[1])
-#         except:
-#             ones.append(0)
-#         try:
-#             twos.append(c1[2])
-#         except:
-#             twos.append(0)
-#         print("Total Fig")
-# #         plt.figure(figsize=(8,8))
-# #         plt.imshow(img)
-# #         plt.show()
-# #         np.save('/home/akshay/Music/DAS_Work/all_datasets/testgray/Te_'+i.split("/")[7].split(".json")[0]+'.jpg', img)
-# #         imsave('/home/akshay/Music/DAS_Work/all_datasets/ptestgray/Te_'+i.split("/")[7].split(".json")[0]+".jpg", img)
-# print("Final Count", count)
-# print("Zeros", sum(zeros))
-# print("Ones", sum(ones))
-# print("Twos", sum(twos))
-
-
-
-
-
-
-
-trainset = UnetDataset("")

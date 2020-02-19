@@ -7,6 +7,8 @@ import torch.nn.functional as F
 import PIL
 import cv2
 from torch.autograd import Variable
+from torch.nn.init import xavier_uniform
+
 
 def tot(pred, target):
     return -2*torch.log(dice_loss(pred, target)) + calc_loss(pred, target)[0]
@@ -125,3 +127,9 @@ def save_image(prediction,batch_idx):
         indices = indices.unsqueeze(0)
         pred = one_hot(indices)
         torchvision.utils.save_image(pred,"./infer_results/{}.png".format(batch_idx))
+
+
+def weights_init(m):
+   if isinstance(m, nn.Conv2d):
+       xavier_uniform(m.weight.data)
+       xavier_uniform(m.bias.data)
