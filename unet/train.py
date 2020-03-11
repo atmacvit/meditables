@@ -76,7 +76,6 @@ for epoch in range(args["num_epoch"]):
 
     epoch_samples = 0
     for batch_idx,batch in enumerate(trainloader):
-          print("Batch id: {}".format(batch_idx))
           net.train()
           img = Variable(batch[0]).to(device)
           gt_mask = Variable(batch[1]).to(device)
@@ -84,7 +83,7 @@ for epoch in range(args["num_epoch"]):
           pred_mask = net(img)
           loss_model = loss_fn(gt_mask,pred_mask,epoch)
           epoch_loss += loss_model
-          print("Epoch : {} || Batch Id: {} || Loss: {}".format(epoch,batch_idx,loss_model.mean().item())
+          print("Epoch : {} || Batch Id: {} || Loss: {}".format(epoch,batch_idx,loss_model.mean().item()))
           optimizer.zero_grad()
           loss_model.backward()
           optimizer.step()
