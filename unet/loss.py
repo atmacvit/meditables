@@ -2,26 +2,27 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
+from utils import make_one_hot
+from torch.autograd import Variable
+from utils import dice_loss
 
 
-class Model_loss(nn.Module):
-    def __init__():
-        super(Model_loss, self).__init__()
-    def log_dice(pred,target):
-        pred_max = F.softmax(pred,dim =1)
-        target_one_hot = one_hot(target,pred2.shape[1])
-        dims = (1, 2, 3)
-        intersection = torch.sum(pred_max * target_one_hot, dims)
-        cardinality = torch.sum(pred_max + target_one_hot, dims)
-        dice_score = (intersection+smooth) / (cardinality + smooth)
-        n_log_dice = -1*torch.log(dice_score)
-        return n_log_dice
-    def forward(pred,target,epoch):
-        if epoch<16:
-            return log_dice(pred,target)
-        else:
-            return (F.cross_entropy(pred,target) + log_dice(pred_target))
+def dice_loss(pred, target, smooth = 1.):
+    pred = pred.contiguous()
+    target = target.contiguous()
+
+    intersection = (pred * target).sum(dim=2).sum(dim=2)
+
+    loss = (1 - ((2. * intersection + smooth) / (pred.sum(dim=2).sum(dim=2) + target.sum(dim=2).sum(dim=2) + smooth)))
+
+    return loss.mean()
 
 
+def loss_fn(pred, target,epoch):
+    if epoch < 16:
+        return -2*torch.log(dice_loss(pred, target))
+    else:
+        log_dice_loss = -2*torch.log(dice_loss)
 
-      
+        class_loss = F.cross_entropy(pred,target.long())
+        return log_dice_loss + class_loss

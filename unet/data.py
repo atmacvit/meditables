@@ -9,7 +9,7 @@ import numpy
 import numpy as np
 import json
 
-
+#The Unet DataSet class ,Assumes the training Images and the Label Mask Images ae of the same name and present in Two differnt Directories
 class UnetDataset(Dataset):
     def __init__(self,image_dir,labels_dir,transform=None,imageloader=cv2.imread):
         super(UnetDataset,self).__init__()
@@ -30,13 +30,18 @@ class UnetDataset(Dataset):
         image_path = self.images[idx]
         labels_path = self.labels[idx]
         img = self.imageloader(image_path)
+        img = cv2.resize(img, (512,512), interpolation=cv2.INTER_AREA)
+        img = PIL.Image.fromarray(img).convert('L')
+
         labels = self.imageloader(labels_path)
+        labels = cv2.resize(labels, (512,512), interpolation=cv2.INTER_AREA)
+        labels = PIL.Image.fromarray(labels).convert('L')
         if self.transform:
             img = self.transform(img)
             labels = self.transform(labels)
         return (img,labels)
 
-
+#The DataSet Class for Infernce
 class InferDataset(Dataset):
     def __init__(self,image_dir,transform,imageloader=cv2.imread):
         super(TestDataset,self).__init__()
@@ -69,7 +74,7 @@ class InferDataset(Dataset):
 
 
 
-
+#THe Dataset class which uses json label files
 class JsonDataset(Dataset):
     def __init__(self,image_dir,labels_dir,tranform=None,imageloader=cv2.imread):
         super(JsonDataset,self).__init__()
@@ -90,35 +95,22 @@ class JsonDataset(Dataset):
                 print("ep", each["points"])
                 a = np.array(each["points"])
                 a = np.append(a, [a[0]], axis=0)
-#                 print("a", a)
-#                 a[:,0] = a[:,0]*512/img1.shape[0]
-#                 a[:,1] = a[:,0]*512/img1.shape[1]
-#                 print("a1", a)
+
                 if each['label']=='Table':
                     rr, cc = polygon(a[:,0], a[:,1], img.shape)
                     canvas[cc,rr] = 1
                     print("Table Fig below")
-#                     plt.figure(figsize=(8,8))
-#                     plt.imshow(img)
-#                     plt.show()
+
                 if each['label']=='T1':
                     rr, cc = polygon(a[:,0], a[:,1], img.shape)
                     canvas[cc,rr] = 1
                     print("T1 Fig below")
-#                     plt.figure(figsize=(8,8))
-#                     plt.imshow(img)
-#                     plt.show()
-#                     cv2.fillPoly(img, [np.array(a, np.int64)], (0,1,0))
+
                 if each['label']=='T2':
                     rr, cc = polygon(a[:,0], a[:,1], img.shape)
                     canvas[cc,rr] = 2
                     print("T2 Fig below")
                 return canvas
-
-
-
-
-
 
     def __getitem__(self,idx):
         image_path = os.path.join(self.image_dir,self.images[idx])

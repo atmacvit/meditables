@@ -33,7 +33,7 @@ train_transforms = transforms.Compose([
 
 inferdata = InferDataset(args["infer_dir"])
 
-inferloader = DataLoader(transformed_dataset, batch_size =1,
+inferloader = DataLoader(inferdata, batch_size =1,
                          num_workers=4,pin_memory=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -50,23 +50,3 @@ net.eval()
 for batch_idx,batch in enumerate(inferloader):
     prediction = net(batch)
     save_image(prediction[0],batch_idx)
-
-
-
-
-
-#           model.train()
-#           img = batch[0].to(device)
-#           mask1 = batch[1].to(device)
-#           mask2 = batch[2].to(device)
-# # #          print("Shapes", img.shape, mask.shape)
-#           epoch_samples += img.size(0)
-#           pred_mask1,pred_mask2 = model(img)
-#           loss_model = loss(mask1,mask2,pred_mask1,pred_mask2)
-# #          print(loss_model.item())
-# #           #loss_model = criterion(pred_mask, mask)
-#           loss_model = loss_model.mean()
-#           epoch_loss += loss_model.item()
-#           optimizer.zero_grad()
-#           loss_model.backward()
-#           optimizer.step()

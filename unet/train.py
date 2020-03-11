@@ -7,21 +7,20 @@ import copy
 from model import UNet
 import json
 import torch.nn.functional as F
-from loss import Model_loss
+from loss import loss_fn
 from data import UnetDataset
 from utils import weights_init
 import numpy as np
-# from torch.autograd import Variable
+from torch.autograd import Variable
 import argparse
 import os
 from torchvision import transforms,utils
 from torchsummary import summary
+from torch.utils.data import DataLoader
 
 
-# num_class = 3
-# num_epochs = 1200
 
-
+#Training Arguments
 parser = argparse.ArgumentParser(description='For Getting Training Arguments')
 parser.add_argument('--image_dir', type=str,
                     help='Path to Training Images')
@@ -46,30 +45,15 @@ assert os.path.exists(args["label_dir"])
 
 
 
-
-
-
-
-
-
-
-#
 train_transforms = transforms.Compose([
     transforms.ToTensor()])
-#
-# data = SegDataset("train_data",transform = train_transforms)
-# #print("THe size of the complete dataset is {}".format(data.__len__()))
-#
-# train_loader  = load_train_test(data,valid_size = 0.01)
-#
-# #print("The size of training examples is : {}".format(len(train_loader.dataset)))
-# #print("The size of testing examples is : {}".format(len(test_loader.dataset)))
-#
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Training on : {}".format(device))
 #
 
 train_data = UnetDataset(args["image_dir"],args["label_dir"],transform = train_transforms)
+trainloader = DataLoader(train_data,batch_size =4,shuffle=True)
 
 print(train_data.__len__())
 print(train_data.__getitem__(4)[0].shape)
@@ -81,41 +65,35 @@ print(train_data.__getitem__(4)[0].shape)
 net = UNet(args["num_class"]).to(device)
 summary(net,(1,512,512))
 optimizer = optim.Adam(net.parameters(), lr=2e-4)
-#
 
-#
-# net.apply(weights_init)
 
 if args["multi_gpu"] == True:
     net = nn.DataParallel(net).to(device)
-# # criterion = nn.BCEWithLogitsLoss()
-#
 
-
-
-# for epoch in range(args["num_epochs"]):
-# #     metrics = defaultdict(float)
+for epoch in range(args["num_epoch"]):
 #     epoch_loss = 0
 #     train_loss = []
 #     val_loss = []
 #     epoch_train_loss = []
 #     epoch_val_loss = []
-# #     epoch_samples = 0
+    epoch_samples = 0
 # # #    print("Epoch Loss for Epoch : {} is {} ".format(epoch,epoch_loss))
-#     for batch_idx,batch in enumerate(train_loader):
-#           net.train()
-#           img = batch[0].to(device)
-#           gt_mask = batch[1].to(device)
-#           epoch_samples += img.size(0)
-#           pred_mask = net(img)
-#           loss_model = Model_loss(gt_mask,pred_mask)
-# #          print(loss_model.item())
+    for batch_idx,batch in enumerate(trainloader):
+          print("Batch id: {}".format(batch_idx))
+          net.train()
+          img = Variable(batch[0]).to(device)
+          gt_mask = Variable(batch[1]).to(device)
+          epoch_samples += img.size(0)
+          pred_mask = net(img)
+          # loss_model = criterion(gt_mask,pred_mask,epoch)
+          loss_model = loss_fn(gt_mask,pred_mask,epoch)
+          print(loss_model.mean().item())
 # #           #loss_model = criterion(pred_mask, mask)
 #           loss_model = loss_model.mean()
 #           epoch_loss += loss_model.item()
-#           optimizer.zero_grad()
-#           loss_model.backward()
-#           optimizer.step()
+          optimizer.zero_grad()
+          loss_model.backward()
+          optimizer.step()
 # # #          print("EPOCH:{0} || BATCH NO:{1} || LOSS:{2}".format(epoch,batch_idx,loss_model.item()))
 #           if batch_idx%3000 == 0:
 #               torch.save(model.module.state_dict(),"../outputs12/checkpoints/ckpt_{}_{}.pth".format(batch_idx,epoch))

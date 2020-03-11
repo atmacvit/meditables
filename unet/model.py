@@ -29,9 +29,6 @@ class UNet(nn.Module):
         self.conv_last_triple = nn.Conv2d(64, 3, 1)
         self.conv_last_single = nn.Conv2d(64, n_class, 1)
 
-
-
-
     def forward(self, x):
         conv1 = self.sconv_down1(x)
         x = self.maxpool(conv1)
@@ -53,16 +50,11 @@ class UNet(nn.Module):
 
         x = self.sconv_up2(x)
         x = self.upsample(x)
-        # if self.attention:
-        #     x = self.atten(x,conv1)
-        #     print(x.shape)
-        #     x = self.sconv_up1_atten(x)
-        # else:
+
         x = torch.cat([x, conv1], dim=1)
 
         x = self.sconv_up1(x)
 
         out_single = self.conv_last_single(x)
-        # out_triple = self.conv_last_triple(x)
-#        print("Out", out.shape)
+
         return out_single
