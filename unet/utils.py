@@ -61,35 +61,6 @@ def one_hot(target,num_classes):
 #    print(torch.unique(target_one_hot))
     return target_one_hot
 
-# def loss(target1,target2,pred1,pred2,class_weights = None,multiclass = False):
-#     smooth = 1.
-#     # if multiclass:
-#     pred_max_2 = F.softmax(pred2,dim =1)
-#     target_one_hot_2 = one_hot(target2,pred2.shape[1])
-#     dims = (1, 2, 3)
-#     intersection = torch.sum(pred_max_2 * target_one_hot_2, dims)
-#     cardinality = torch.sum(pred_max_2 + target_one_hot_2, dims)
-#     dice_score = (intersection+smooth) / (cardinality + smooth)
-#     n_log_dice = -1*torch.log(dice_score)
-#     cce_loss = F.cross_entropy(pred2,target2.long())
-#     l1 = (cce_loss + 2*(n_log_dice))
-#     # else:
-#    #  dims = (1, 2, 3)
-#     pred_max_1 = torch.sigmoid(pred1)
-#     # print(target1.shape)
-#     # print(pred1.shape[1])
-#     # target_one_hot_1 = one_hot(target1,pred1.shape[1])
-#     intersection = torch.sum(pred_max_1 * target1,dims)
-#     cardinality = torch.sum(pred_max_1 + target1,dims)
-#     s_dice_score =  (intersection+smooth) / (cardinality + smooth)
-#     n_log_dice1 = -1*torch.log(dice_score)
-#     #    print(n_log_dice.shape)
-#     bce_loss = F.binary_cross_entropy_with_logits(pred1,target1.float())
-#      #   print(bce_loss.shape)
-#    #     print("Log Loss : {} || BCE Loss : {}".format(n_log_dice,bce_loss))
-#     l2 = (bce_loss + 2*(n_log_dice1))
-#     l = l1 + l2
-#     return l.mean()
 
 
 def make_one_hot(labels):
