@@ -6,7 +6,7 @@ We have collected a 200 image camera-captured dataset from the healthcare/medica
 
 The dataset MediTables-IIIT has been published in this repository along with the annotations for table types T1 and T2.
 
-Our goal to locate tables has been carried out in two phases:
+Our goal to locate tables has been carried out in two phases in order to develop baselines on the contributed dataset:
 - Table Detection - Building of a semantic segmentation Modified-UNet model that outputs a target map with two classes - Table and Non-Table
 - Table Segmentation - Building of a semantic segmentation Modified-UNet model that outputs a target map with three classes - Table T1, Table T2 and Non-Table
 
@@ -21,5 +21,6 @@ Five popular datasets - Marmot, UNLV, ICDAR 2013 table competition, UW3 and Tabl
 These datasets were pre-processed and augmented (code available in this repository).
 
 Table Detection using Modified U-Net:
-After training the model using the five popular datasets, the training of the model using the training set of MediTables-IIIT was carried out by optimizing the model over two losses: per-pixel cross entropy loss & logarithmic version of IoU loss. 
-The model was trained for a total of 58 epochs.
+- Training the model using the five popular datasets - Model M1
+- The training of the model using the training set of MediTables-IIIT was carried out by optimizing the model over two losses: per-pixel cross entropy loss & logarithmic version of IoU loss (only epoch 16 onwards with a coefficient of 20) for 58 epochs - This was evaluated on the validation set of MediTables-IIIT
+- Using the same hyperparameters and the developed stopping criterion, Model M1 was trained using training and validation sets of MediTables-IIIT and evaluated one time on the testing set of MediTables-IIIT
