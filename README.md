@@ -24,3 +24,5 @@ Table Detection using Modified U-Net:
 - Training the model using the five popular datasets - Model M1
 - The training of the model using the training set of MediTables-IIIT was carried out by optimizing the model over two losses: per-pixel cross entropy loss & logarithmic version of IoU loss (only epoch 16 onwards with a coefficient of 20) for 58 epochs - This was evaluated on the validation set of MediTables-IIIT
 - Using the same hyperparameters and the developed stopping criterion, Model M1 was trained using training and validation sets of MediTables-IIIT and evaluated one time on the testing set of MediTables-IIIT
+
+Post-processing was also performed for all models before evaluation (code in this repository).
