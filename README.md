@@ -1,10 +1,8 @@
 # MediTables-IIIT
 
-The Dataset, Code and Pre-trained Models for table localization in document images from the healthcare/medical domain 
+We have collected a 200 image camera-captured dataset from the healthcare/medical domain that structurizes tables in a distinct manner compared to traditional documents, and is representative of the healthcare/medical documents generally found. Two tables types are common in healthcare documents which we have referred to as a T1 type table (conventional) and a T2 type table (key-value pairs). 
 
-We have collected a 200 image camera-captured dataset from the healthcare/medical domain that structurizes tables in a distinct manner compared to traditional documents. Two tables types are common in healthcare documents which we have referred to as a T1 type table (conventional) and a T2 type table (key-value pairs). 
-
-The dataset MediTables-IIIT has been published in this repository along with the annotations for table types T1 and T2.
+As the dataset is scraped from the web, you can fill a Google Form (link here) for access to the dataset (image URLs) and annotations by accepting/consenting that neither the authors of this paper nor our organization will be held responsible for how these images are used.
 
 Our goal to locate tables has been carried out in two phases in order to develop baselines on the contributed dataset:
 - Table Detection - Building of a semantic segmentation Modified-UNet model that outputs a target map with two classes - Table and Non-Table
