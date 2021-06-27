@@ -1,4 +1,4 @@
-# MediTables-IIIT
+# MediTables
 
 We have collected a 200 image camera-captured dataset from the healthcare/medical domain that structurizes tables in a distinct manner compared to traditional documents, and is representative of the healthcare/medical documents generally found. Two tables types are common in healthcare documents which we have referred to as a T1 type table (conventional) and a T2 type table (key-value pairs). 
 
@@ -15,12 +15,12 @@ We have conducted experiments on three other models:
 2. An object recognition model YOLOv3
 3. A semantic segmentation model pix2pixHD - https://github.com/NVIDIA/pix2pixHD
 
-Five popular datasets - Marmot, UNLV, ICDAR 2013 table competition, UW3 and TableBank have been used to train these models beforehand, before finetuning the models on MediTables-IIIT.
+Five popular datasets - Marmot, UNLV, ICDAR 2013 table competition, UW3 and TableBank have been used to train these models beforehand, before finetuning the models on MediTables.
 These datasets were pre-processed and augmented (code available in this repository).
 
 Table Detection using Modified U-Net:
 - Training the model using the five popular datasets - Model M1
-- The training of the model using the training set of MediTables-IIIT was carried out by optimizing the model over two losses: per-pixel cross entropy loss & logarithmic version of IoU loss (only epoch 16 onwards with a coefficient of 20) for 58 epochs - This was evaluated on the validation set of MediTables-IIIT
-- Using the same hyperparameters and the developed stopping criterion, Model M1 was trained using training and validation sets of MediTables-IIIT and evaluated one time on the testing set of MediTables-IIIT
+- The training of the model using the training set of MediTables was carried out by optimizing the model over two losses: per-pixel cross entropy loss & logarithmic version of IoU loss (only epoch 16 onwards with a coefficient of 20) for 58 epochs - This was evaluated on the validation set of MediTables
+- Using the same hyperparameters and the developed stopping criterion, Model M1 was trained using training and validation sets of MediTables and evaluated one time on the testing set of MediTables
 
 Post-processing was also performed for all models before evaluation (code in this repository).
