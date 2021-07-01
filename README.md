@@ -4,4 +4,4 @@ This repository is for Meditables, a 200 image camera-captured dataset of medica
 
 In this repo, we also provide pre-trained models in this repo for localizing these tables.
 
-For additional details, check out our paper < ahref="https://drive.google.com/file/d/1O1OI8Lc9xCuZolwUcWPTQcycWQGQ5piE/view?usp=sharing">MediTables: A New Dataset and Deep Network for Multi-Category Table Localization in Medical Documents</a> accepted for ORAL presentation at <a href="https://grec2021.univ-lr.fr/">The 14th IAPR International Workshop on Graphics Recognition (GREC 2021)</a>.
+For additional details, check out our paper [MediTables: A New Dataset and Deep Network for Multi-Category Table Localization in Medical Documents](https://drive.google.com/file/d/1O1OI8Lc9xCuZolwUcWPTQcycWQGQ5piE/view?usp=sharing") accepted for ORAL presentation at <a href="https://grec2021.univ-lr.fr/">The 14th IAPR International Workshop on Graphics Recognition (GREC 2021)</a>.
