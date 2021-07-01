@@ -1,26 +1,7 @@
 # MediTables
 
-We have collected a 200 image camera-captured dataset from the healthcare/medical domain that structurizes tables in a distinct manner compared to traditional documents, and is representative of the healthcare/medical documents generally found. Two tables types are common in healthcare documents which we have referred to as a T1 type table (conventional) and a T2 type table (key-value pairs). 
+This repository is for Meditables, a 200 image camera-captured dataset of medical reports with table annotations. Two tables types are common in healthcare documents which we have referred to as a T1 type table (conventional) and a T2 type table (key-value pairs). The dataset can be accesed here: https://zenodo.org/record/5048287#.YNzazBMzZhE
 
-The Dataset can be accesed here: https://zenodo.org/record/5048287#.YNzazBMzZhE
+In this repo, we also provide pre-trained models in this repo for localizing these tables.
 
-Our goal to locate tables has been carried out in two phases in order to develop baselines on the contributed dataset:
-- Table Detection - Building of a semantic segmentation Modified-UNet model that outputs a target map with two classes - Table and Non-Table
-- Table Segmentation - Building of a semantic segmentation Modified-UNet model that outputs a target map with three classes - Table T1, Table T2 and Non-Table
-
-In order to evaluate the accuracy of our model in terms of three metrics: 
-Intersection over Union, Per-Pixel accuracy and F1 score,
-We have conducted experiments on three other models: 
-1. An object recognition model TableBank - https://github.com/doc-analysis/TableBank
-2. An object recognition model YOLOv3
-3. A semantic segmentation model pix2pixHD - https://github.com/NVIDIA/pix2pixHD
-
-Five popular datasets - Marmot, UNLV, ICDAR 2013 table competition, UW3 and TableBank have been used to train these models beforehand, before finetuning the models on MediTables.
-These datasets were pre-processed and augmented (code available in this repository).
-
-Table Detection using Modified U-Net:
-- Training the model using the five popular datasets - Model M1
-- The training of the model using the training set of MediTables was carried out by optimizing the model over two losses: per-pixel cross entropy loss & logarithmic version of IoU loss (only epoch 16 onwards with a coefficient of 20) for 58 epochs - This was evaluated on the validation set of MediTables
-- Using the same hyperparameters and the developed stopping criterion, Model M1 was trained using training and validation sets of MediTables and evaluated one time on the testing set of MediTables
-
-Post-processing was also performed for all models before evaluation (code in this repository).
+For additional details, check out our paper < ahref="https://drive.google.com/file/d/1O1OI8Lc9xCuZolwUcWPTQcycWQGQ5piE/view?usp=sharing">MediTables: A New Dataset and Deep Network for Multi-Category Table Localization in Medical Documents</a> accepted for ORAL presentation at <a href="https://grec2021.univ-lr.fr/">The 14th IAPR International Workshop on Graphics Recognition (GREC 2021)</a>.
