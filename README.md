@@ -50,7 +50,9 @@ The downloaded data is to be arranged in the following format:
 |   +-- ..
 |   +-- ..
 ```
-i.e the the image files and the corresponding annotation files from a split are to be places in the same directory.
+i.e the the image files and the corresponding annotation files from a split are to be places in the same directory. For example please view the "sample_data_folder" directory.
+
+The ``` download_data_split.py ``` script can be used to download once split of dataset at a time using the urls.txt present in the dataset.
 
 # To Train the model:
 ```
@@ -62,7 +64,7 @@ Once the training is finished, the model checkpoints and tensoboard logs will be
 
 # To run inference on a trained model:
  ```
- python ModifiedUnet/inference.py --checkpoint_path <path to trained checkpoint> --infer_dir <Path to Inference Images Directory> --num_class <number of classes>
+ python ModifiedUnet/inference.py --checkpoint_path <path to trained checkpoint> --infer_dir <Path to Inference Images Directory> --num_class <number of classes i.e deafult = 2 >
  ```
  Once the Inference is finished the predicted masks will be saved in the `infer_results` directory.
  
