@@ -313,7 +313,7 @@ def create_json(mask_image_open,file_path,save_path):
     coco_format = get_coco_json_format()
     coco_format["categories"] = create_category_annotation(category_ids)
     coco_format["images"], coco_format["annotations"] = images,annotations
-    save_path = os.path.join(os.getcwd(),save_path)
+    # save_path = os.path.join(os.getcwd(),save_path)
     with open(save_path,"w") as f:
         json.dump(coco_format,f)
 

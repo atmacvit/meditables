@@ -71,7 +71,8 @@ if __name__ == "__main__":
         f_name = os.path.split(file_name)[1]
         name = os.path.splitext(f_name)[0]
         save_name = name + ".json"
-        create_json(masks,file_name,save_name)
+        save_path = os.path.join("./infer_results",save_name)
+        create_json(masks,file_name,save_path)
 
 
 
