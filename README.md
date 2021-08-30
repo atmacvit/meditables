@@ -66,7 +66,7 @@ Once the training is finished, the model checkpoints and tensoboard logs will be
  ```
  python ModifiedUnet/inference.py --checkpoint_path <path to trained checkpoint> --infer_dir <Path to Inference Images Directory> --num_class <number of classes i.e deafult = 2 >
  ```
- Once the Inference is finished the predicted masks will be saved in the `infer_results` directory.
+ Once the Inference is finished the predicted json will be saved in the `infer_results` directory.The Jsons follow COCO annotations format. Annotation format Converters like https://github.com/fcakyon/labelme2coco can be used to change between formats.
  
  
 
