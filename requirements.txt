@@ -48,5 +48,5 @@ torchmetrics==0.4.1
 tqdm==4.61.2
 typing-extensions==3.10.0.0
 urllib3==1.26.6
-Werkzeug==2.0.1
+Werkzeug==2.2.3
 yarl==1.6.3
